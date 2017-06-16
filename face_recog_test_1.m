@@ -3,14 +3,14 @@ clear all;
 obj=videoinput('winvideo');
 vp=vision.VideoPlayer;
 facedetector=vision.CascadeObjectDetector();
-overlay=imread('batman.jpg');
-for i=1:10 % temporary. Will later be replaced by 'while true'
+overlay=imread('krrish.jpg');
+disp('press ctrl+c to exit')
+while 1 
     frame=getsnapshot(obj);
     %===================================================
     %manipulate frame here
     bbox=step(facedetector,frame);
     faces=size(bbox);
-    frame=insertObjectAnnotation(frame,'rectangle',bbox,'face');
     for i=1:faces(1) %do for each face
         reduced_overlay=imresize(overlay,[bbox(i,3) bbox(i,4)]);
         for j=bbox(i,2):bbox(i,2)+bbox(i,3)-1
@@ -28,5 +28,3 @@ for i=1:10 % temporary. Will later be replaced by 'while true'
     %===================================================
     step(vp,frame)
 end
-delete(obj);
-delete(vp);
